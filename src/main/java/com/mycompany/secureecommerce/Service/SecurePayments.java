@@ -45,8 +45,7 @@ public class SecurePayments {
             
         }
             
-                
-            
+    
      
      
       public static boolean verifyToken(String token, String storedTokenHash){
@@ -66,6 +65,7 @@ public class SecurePayments {
                     // encryption settings with tag to prevent tampering 
                     // note Decrypt() needs the same AES key and the nonce used for encrypt()
                     cipher.init(Cipher.ENCRYPT_MODE,aesKey, new GCMParameterSpec(128, randomByte));
+    
                     
                     
                     // encrypts message to bytes
@@ -90,11 +90,26 @@ public class SecurePayments {
             try{
                     
                  String[] parts = message.split(":", -1);
-
                  
                  
-                 // create decryption 
+                 if(parts.length != 2 ){
+                     
+                       throw new IllegalArgumentException("Invalid encrypted message.");
+                 }
                  
+                    // decode string 
+                    byte[] nonce = Base64.getDecoder().decode(parts[0]);
+                    byte[] encryptedMessage = Base64.getDecoder().decode(parts[1]);
+                 
+                 
+                    // create decryption 
+                    Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+                    cipher.init( Cipher.DECRYPT_MODE,aesKey, new GCMParameterSpec(128, nonce));
+                          
+                        
+                        byte[] decryptedMessage = cipher.doFinal(encryptedMessage);
+                        
+                         return new String(decryptedMessage, StandardCharsets.UTF_8);
                  
              }catch(GeneralSecurityException e){
                   throw new IllegalStateException("Decryption failed.", e);

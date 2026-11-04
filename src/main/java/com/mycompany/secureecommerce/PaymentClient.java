@@ -4,10 +4,3 @@
  */
 package com.mycompany.secureecommerce;
 
-/**
- *
- * @author Alexb
- */
-public class PaymentClient {
-    
-}

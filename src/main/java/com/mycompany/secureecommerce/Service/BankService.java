@@ -28,9 +28,20 @@ public class BankService {
         public BankService(SecurePayments securePayments) {
          this.securePayments = securePayments;
 
-            // One fictional account for testing.
-             String tokenHash = securePayments.hashPassword("DemoToken1");
-                accounts.add(new BankAccount("ACC001", "USER001",tokenHash,100.00));
+            accounts.add(new BankAccount("ACC001", "USER001",
+                SecurePayments.hashPassword("DemoToken1"), 100.00));
+
+            accounts.add(new BankAccount("ACC002", "USER002",
+                SecurePayments.hashPassword("DemoToken2"), 100.00));
+
+            accounts.add(new BankAccount("ACC003", "USER003",
+                SecurePayments.hashPassword("DemoToken3"), 100.00));
+
+            accounts.add(new BankAccount("ACC004", "USER004",
+               SecurePayments.hashPassword("DemoToken4"), 100.00));
+
+            accounts.add(new BankAccount("ACC005", "USER005",
+               SecurePayments.hashPassword("DemoToken5"), 100.00));
                 }
     
     
