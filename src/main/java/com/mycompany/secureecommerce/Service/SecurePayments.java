@@ -9,8 +9,13 @@ import java.security.SecureRandom;
 import javax.crypto.Cipher;
 import javax.crypto.spec.GCMParameterSpec;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.security.GeneralSecurityException;
 import java.util.Base64;
+import javax.crypto.KeyGenerator;
+import javax.crypto.spec.SecretKeySpec;
 
 
 
@@ -117,7 +122,23 @@ public class SecurePayments {
              }
         }
     
-     
+        public static SecretKey loadSharedKey() throws Exception {
+
+            Path file = Path.of(
+              System.getProperty("user.home"), "payment-aes.key");
+
+                
+                if(!Files.exists(file)){
+                    
+                   KeyGenerator generator = KeyGenerator.getInstance("AES");
+                   generator.init(128);
+
+        Files.write(file, generator.generateKey().getEncoded(),StandardOpenOption.CREATE_NEW);
+        
+         }
+            // Both programs load the same saved key.
+                return new SecretKeySpec(Files.readAllBytes(file), "AES");
+        }
       
       // generate random 12 bytes 
      public byte[] generateNonce(){ 

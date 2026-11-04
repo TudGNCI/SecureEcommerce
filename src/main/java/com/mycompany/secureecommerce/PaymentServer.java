@@ -99,7 +99,7 @@ import javax.crypto.SecretKey;
         out.println(response);
         link.close();
         
-         }catch(IOException e){
+         }catch(IOException | RuntimeException e){
              System.out.println("Connection error: " + e.getMessage());
          }
        

@@ -32,16 +32,16 @@ public class BankService {
                 SecurePayments.hashPassword("DemoToken1"), 100.00));
 
             accounts.add(new BankAccount("ACC002", "USER002",
-                SecurePayments.hashPassword("DemoToken2"), 100.00));
+                SecurePayments.hashPassword("DemoToken2"), 220.00));
 
             accounts.add(new BankAccount("ACC003", "USER003",
-                SecurePayments.hashPassword("DemoToken3"), 100.00));
+                SecurePayments.hashPassword("DemoToken3"), 300.00));
 
             accounts.add(new BankAccount("ACC004", "USER004",
-               SecurePayments.hashPassword("DemoToken4"), 100.00));
+               SecurePayments.hashPassword("DemoToken4"), 422.00));
 
             accounts.add(new BankAccount("ACC005", "USER005",
-               SecurePayments.hashPassword("DemoToken5"), 100.00));
+               SecurePayments.hashPassword("DemoToken5"), 275.00));
                 }
     
     
