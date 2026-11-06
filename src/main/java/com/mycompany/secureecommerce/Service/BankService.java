@@ -59,6 +59,7 @@ public class BankService {
     public synchronized String ProcessPayment(String envelope){
         
         String request = securePayments.decrypt(envelope);
+        System.out.println("[BANK] Request decrypted and integrity verified.");
         
         // store the request details split in fields 
         String[] fields = request.split(";", -1 );
@@ -89,12 +90,15 @@ public class BankService {
                 
                 // checks for duplicate transactionId
             if(processedTransaction.containsKey(transactionId)){
+                 System.out.println("[BANK] Duplicate transaction: returning saved result.");
                  return securePayments.encrypt(processedTransaction.get(transactionId));
                 }
                 
             if( b.debit(amount)){
                 
                   // store trasnaction outcome
+            System.out.println("[BANK] Payment approved. Amount debited: " + amount);
+            System.out.println("[BANK] Remaining balance: " + b.getBalance());
             String response = transactionId + ";" + amount + ";APPROVED;Payment successful"; 
             
             processedTransaction.put(transactionId, response);
@@ -105,6 +109,7 @@ public class BankService {
             
         } else {
                 
+                System.out.println("[BANK] Payment declined: insufficient funds.");
                 String response =  transactionId + ";" + amount + ";DECLINED;Insufficient funds";
                 processedTransaction.put(transactionId, response);
                 return securePayments.encrypt(response);
@@ -113,6 +118,7 @@ public class BankService {
           }
         }
         
+        System.out.println("[BANK] Payment declined: invalid credentials.");
         String response =  transactionId + ";" + amount + ";DECLINED;Invalid payment credentials";
         return securePayments.encrypt(response);
         

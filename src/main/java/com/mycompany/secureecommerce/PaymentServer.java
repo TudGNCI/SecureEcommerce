@@ -93,10 +93,12 @@ import javax.crypto.SecretKey;
          PrintWriter out = new PrintWriter(new OutputStreamWriter(link.getOutputStream(),StandardCharsets.UTF_8), true);
          
         String request = in.readLine();
+        System.out.println("[SERVER] Encrypted request received: " + request);
 
         String response = bankService.ProcessPayment(request);
 
         out.println(response);
+        System.out.println("[SERVER] Sent encrypted response: " + response);
         link.close();
         
          }catch(IOException | RuntimeException e){
