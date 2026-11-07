@@ -16,6 +16,19 @@ public class UserManager {
     private User currentUser;
     SecurePayments SecurePayments;
     
+    public UserManager(){
+
+        userList.add(new User("USER001 ", "demo1", SecurePayments.hashPassword("DemoPass1")));
+
+        userList.add(new User("USER002", "demo2", SecurePayments.hashPassword("DemoPass2")));
+
+        userList.add(new User("USER003", "demo3", SecurePayments.hashPassword("DemoPass3")));
+
+        userList.add(new User("USER004", "demo4", SecurePayments.hashPassword("DemoPass4")));
+
+        userList.add(new User("USER005", "demo5", SecurePayments.hashPassword("DemoPass5")));
+    }
+    
     
     
     public boolean registerUser(String name, String password) {

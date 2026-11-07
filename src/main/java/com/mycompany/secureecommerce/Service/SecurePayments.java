@@ -9,8 +9,13 @@ import java.security.SecureRandom;
 import javax.crypto.Cipher;
 import javax.crypto.spec.GCMParameterSpec;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.security.GeneralSecurityException;
 import java.util.Base64;
+import javax.crypto.KeyGenerator;
+import javax.crypto.spec.SecretKeySpec;
 
 
 
@@ -45,8 +50,7 @@ public class SecurePayments {
             
         }
             
-                
-            
+    
      
      
       public static boolean verifyToken(String token, String storedTokenHash){
@@ -66,6 +70,7 @@ public class SecurePayments {
                     // encryption settings with tag to prevent tampering 
                     // note Decrypt() needs the same AES key and the nonce used for encrypt()
                     cipher.init(Cipher.ENCRYPT_MODE,aesKey, new GCMParameterSpec(128, randomByte));
+    
                     
                     
                     // encrypts message to bytes
@@ -90,11 +95,26 @@ public class SecurePayments {
             try{
                     
                  String[] parts = message.split(":", -1);
-
                  
                  
-                 // create decryption 
+                 if(parts.length != 2 ){
+                     
+                       throw new IllegalArgumentException("Invalid encrypted message.");
+                 }
                  
+                    // decode string 
+                    byte[] nonce = Base64.getDecoder().decode(parts[0]);
+                    byte[] encryptedMessage = Base64.getDecoder().decode(parts[1]);
+                 
+                 
+                    // create decryption 
+                    Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+                    cipher.init( Cipher.DECRYPT_MODE,aesKey, new GCMParameterSpec(128, nonce));
+                          
+                        
+                        byte[] decryptedMessage = cipher.doFinal(encryptedMessage);
+                        
+                         return new String(decryptedMessage, StandardCharsets.UTF_8);
                  
              }catch(GeneralSecurityException e){
                   throw new IllegalStateException("Decryption failed.", e);
@@ -102,7 +122,23 @@ public class SecurePayments {
              }
         }
     
-     
+        public static SecretKey loadSharedKey() throws Exception {
+
+            Path file = Path.of(
+              System.getProperty("user.home"), "payment-aes.key");
+
+                
+                if(!Files.exists(file)){
+                    
+                   KeyGenerator generator = KeyGenerator.getInstance("AES");
+                   generator.init(128);
+
+        Files.write(file, generator.generateKey().getEncoded(),StandardOpenOption.CREATE_NEW);
+        
+         }
+            // Both programs load the same saved key.
+                return new SecretKeySpec(Files.readAllBytes(file), "AES");
+        }
       
       // generate random 12 bytes 
      public byte[] generateNonce(){ 

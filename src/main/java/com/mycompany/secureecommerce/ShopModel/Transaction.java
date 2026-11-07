@@ -20,6 +20,7 @@ public class Transaction {
         this.productId = productId;
         this.amount = amount;
         this.status = "PENDING";
+        this.transactionId = java.util.UUID.randomUUID().toString();
     }
     
     public String getTransactionId() {

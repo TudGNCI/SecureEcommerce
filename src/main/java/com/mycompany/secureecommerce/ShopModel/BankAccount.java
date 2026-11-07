@@ -15,8 +15,7 @@ public class BankAccount {
     private double balance;
 
 
-    public BankAccount(String accountNumber, String ownerUserId, 
-            String paymentTokenHash, double balance){
+    public BankAccount(String accountNumber, String ownerUserId, String paymentTokenHash, double balance){
         this.accountNumber = accountNumber;
         this.ownerUserId = ownerUserId;
         this.paymentTokenHash = paymentTokenHash;
