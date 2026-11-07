@@ -4,6 +4,8 @@
  */
 package com.mycompany.secureecommerce.ShopUI;
 
+import com.mycompany.secureecommerce.Service.UserManager;
+
 /**
  *
  * @author Alexb
@@ -11,12 +13,13 @@ package com.mycompany.secureecommerce.ShopUI;
 public class SignUpUI extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SignUpUI.class.getName());
-
+    private UserManager UserManager;
     /**
      * Creates new form SignUpUI
      */
-    public SignUpUI() {
+    public SignUpUI(UserManager UserManager) {
         initComponents();
+        this.UserManager = UserManager;
     }
 
     /**
@@ -105,6 +108,30 @@ public class SignUpUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+       private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        String name = signName.getText();
+        String pass = new String(signPass.getPassword());
+        String pass2 = new String(signPass2.getPassword());
+        
+        
+        if(name.isEmpty() || pass.isEmpty() || pass2.isEmpty()){
+             jLabel1.setText("Complete all fields");
+
+        }else if(!pass.equals(pass2)){
+             jLabel1.setText("Passwords do not match");
+
+        }else if(UserManager.registerUser(name, pass)){
+             jLabel1.setText("Account created");
+              
+            new LoginUI(UserManager).setVisible(true);
+            dispose();
+
+        }else{
+             jLabel1.setText("Username already exists");
+        }      
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -127,7 +154,7 @@ public class SignUpUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new SignUpUI().setVisible(true));
+        //java.awt.EventQueue.invokeLater(() -> new SignUpUI().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
