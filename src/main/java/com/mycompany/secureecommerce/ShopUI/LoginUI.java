@@ -105,6 +105,33 @@ public class LoginUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        String name = loginName.getText();
+        String pass = new String(loginPass.getPassword());
+        
+
+        
+        
+        if(!pass.isEmpty() && !name.isEmpty()){
+            if( UserManager.login(name, pass)){
+                new ShopUI(UserManager).setVisible(true);
+                dispose();
+            }else {
+                
+              jLabel3.setText("Account Login Failed - Try Again");
+              
+            }
+                
+        }        
+       
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new SignUpUI(UserManager).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
     /**
      * @param args the command line arguments
      */
