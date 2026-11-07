@@ -18,7 +18,7 @@ public class UserManager {
     
     public UserManager(){
 
-        userList.add(new User("USER001", "demo1", SecurePayments.hashPassword("DemoPass1")));
+        userList.add(new User("USER001 ", "demo1", SecurePayments.hashPassword("DemoPass1")));
 
         userList.add(new User("USER002", "demo2", SecurePayments.hashPassword("DemoPass2")));
 

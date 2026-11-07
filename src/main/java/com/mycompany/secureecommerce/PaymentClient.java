@@ -47,6 +47,7 @@ public class PaymentClient {
                                 PrintWriter out = new PrintWriter(new OutputStreamWriter(link.getOutputStream(), StandardCharsets.UTF_8), true);
 
                                 out.println(encryptedRequest);
+                                System.out.println("[CLIENT] Sent encrypted request: " + encryptedRequest);
                                 
                                 
                                     BufferedReader in = new BufferedReader(new InputStreamReader(link.getInputStream(), StandardCharsets.UTF_8));
@@ -68,6 +69,7 @@ public class PaymentClient {
                                          throw new IllegalStateException("Invalid payment response.");
                                     }
                                     
+                                    System.out.println("[CLIENT] Response decrypted and matched to transaction.");
                                     return response;
                                 
                             }catch(IOException e){
