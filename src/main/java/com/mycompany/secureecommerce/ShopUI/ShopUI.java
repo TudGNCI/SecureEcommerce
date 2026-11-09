@@ -4,6 +4,13 @@
  */
 package com.mycompany.secureecommerce.ShopUI;
 
+import com.mycompany.secureecommerce.PaymentClient;
+import com.mycompany.secureecommerce.Service.SecurePayments;
+import com.mycompany.secureecommerce.Service.UserManager;
+import com.mycompany.secureecommerce.ShopModel.Transaction;
+import com.mycompany.secureecommerce.ShopModel.Product;
+import java.util.ArrayList;
+
 /**
  *
  * @author Alexb
@@ -11,14 +18,31 @@ package com.mycompany.secureecommerce.ShopUI;
 public class ShopUI extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ShopUI.class.getName());
-
+    private UserManager UserManager;
+     private int currentIndex = 0;
     /**
      * Creates new form ShopUI
      */
-    public ShopUI() {
+    public ShopUI(UserManager UserManager) {
         initComponents();
+        
+        products.add(new Product("P001", "Plain T-Shirt", 7.99));
+        products.add(new Product("P002", "Crew Socks (3 Pack)", 4.99));
+        products.add(new Product("P003", "Basic Hoodie", 16.99));
+        products.add(new Product("P004", "Joggers", 12.99));
+        products.add(new Product("P005", "Baseball Cap", 5.99));
+        products.add(new Product("P006", "Denim Shorts", 11.99));
+        products.add(new Product("P007", "Long-Sleeve T-Shirt", 9.99));
+        products.add(new Product("P008", "Knit Beanie", 4.49));
+        products.add(new Product("P009", "Fleece Sweatshirt", 14.99));
+        products.add(new Product("P010", "Basic Leggings", 8.99));
+        
+       
+        this.UserManager = UserManager;
+        productDisplay.setText(products.get(currentIndex).getProductDetails());
     }
-
+        
+    private final ArrayList<Product> products = new ArrayList<>();
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

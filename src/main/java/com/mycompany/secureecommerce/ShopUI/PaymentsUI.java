@@ -4,6 +4,11 @@
  */
 package com.mycompany.secureecommerce.ShopUI;
 
+import com.mycompany.secureecommerce.PaymentClient;
+import com.mycompany.secureecommerce.ShopModel.Product;
+import com.mycompany.secureecommerce.ShopModel.Transaction;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Alexb
@@ -11,12 +16,24 @@ package com.mycompany.secureecommerce.ShopUI;
 public class PaymentsUI extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PaymentsUI.class.getName());
-
+    private Transaction transaction;
+    private PaymentClient paymentClient;
+    private final ShopUI shopUI;
     /**
      * Creates new form PaymentsUI
      */
-    public PaymentsUI() {
+    public PaymentsUI(Product product, Transaction transaction, PaymentClient paymentClient, ShopUI shopUI) {
         initComponents();
+        
+       
+        
+        this.transaction = transaction;
+        this.paymentClient = paymentClient;
+        this.shopUI = shopUI;
+        
+        productNameLabel.setText(product.getName());
+        priceLabel.setText(String.format("%.2f", product.getPrice()));
+        
     }
 
     /**
